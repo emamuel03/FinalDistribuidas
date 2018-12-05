@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AgendaDistribuidas.Models.Contacto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Contactos</h2>
+
+<p>
+    <a asp-action="Create">Crear Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Interno)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sector)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Interno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sector.Descripcion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ContactoId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.ContactoId">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.ContactoId">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

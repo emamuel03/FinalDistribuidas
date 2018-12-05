@@ -5,33 +5,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AgendaDistribuidas.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaDistribuidas.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly AgendaDistribuidasContext _context;
+
+        public HomeController(AgendaDistribuidasContext context)
         {
-            return View();
+            _context = context;
         }
 
-        public IActionResult About()
+        // GET: Contactos
+        public async Task<IActionResult> Index(string textBusqueda)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            var contactos = from c in _context.Contacto
+                            select c;
+            if (!String.IsNullOrEmpty(textBusqueda))
+            {
+                contactos = contactos.Where(s => s.Nombre.Contains(textBusqueda));
+            }
+            return View(await contactos.ToListAsync());
         }
 
-        public IActionResult Contact()
+        public PartialViewResult Detalle(string nombre)
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var contactos = _context.Contacto.Where(c => c.Nombre.ToLower().Contains(nombre.ToLower())).ToList();
+            return PartialView("_Detalle", contactos);
         }
     }
 }

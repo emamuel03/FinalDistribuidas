@@ -1,0 +1,39 @@
+﻿@model AgendaDistribuidas.Models.Contacto
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<h3>¿Está seguro de eliminar esto?</h3>
+<div>
+    <h4>Contacto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Interno)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Interno)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sector)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sector.Descripcion)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ContactoId" />
+        <input type="submit" value="Eliminar" class="btn btn-default" /> |
+        <a asp-action="Index">Volver atrás</a>
+    </form>
+</div>
