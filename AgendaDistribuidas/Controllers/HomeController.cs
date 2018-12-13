@@ -21,19 +21,13 @@ namespace AgendaDistribuidas.Controllers
         // GET: Contactos
         public async Task<IActionResult> Index(string textBusqueda)
         {
-            var contactos = from c in _context.Contacto
+            var contactos = from c in _context.Contacto.Include(s=>s.Sector)
                             select c;
             if (!String.IsNullOrEmpty(textBusqueda))
             {
                 contactos = contactos.Where(s => s.Nombre.Contains(textBusqueda));
             }
             return View(await contactos.ToListAsync());
-        }
-
-        public PartialViewResult Detalle(string nombre)
-        {
-            var contactos = _context.Contacto.Where(c => c.Nombre.ToLower().Contains(nombre.ToLower())).ToList();
-            return PartialView("_Detalle", contactos);
         }
     }
 }
